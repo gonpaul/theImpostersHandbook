@@ -8,3 +8,5 @@ export function fullAdder(a, b, c) {
     // [carry, sum], i think I am wrong here and it is [sum, carry]
     return [ha2[1], ha1[0] | ha2[0]]; // | is a bitwise OR, while || is a logical OR
 }
+
+const fullAdder2 = (a, b, c = 0) => c ? [a | b, a === b] : halfAdder(a, b);
