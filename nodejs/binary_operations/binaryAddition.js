@@ -5,15 +5,16 @@ export function binaryAddition(a, b) {
   let carry = 0;
   for (let i = a.length - 1; i >= 0; i--) {
     const fa = fullAdder(a[i], b[i], carry);
-    result.unshift(fa[1]);
-    carry = fa[0];
+    result.unshift(fa[0]);
+    carry = fa[1];
   }
-  return result;
+  return carry ? [carry, ...result] : result;
 }
 
-console.log(binaryAddition([1, 0, 1, 0], [1, 1, 0, 1])); // [1, 0, 0, 0, 1]
+console.log(binaryAddition([1, 0, 1, 0], [1, 1, 0, 1])); // 10111
+console.log(binaryAddition([0, 1, 0, 0], [1, 1, 0, 1])); // 10001
 
-export function binaryAddition2(a, b) {
+export function binaryAddition2(a, b) { 
   return (a | b) + (a & b);
 }
 
