@@ -3,7 +3,10 @@ import { fullAdder } from './adders.js';
 export function binaryAddition(a, b) {
   const result = [];
   let carry = 0;
-  [a, b] = [a.join(''), b.join('')];
+  if (typeof a !== 'string') {
+    [a, b] = [a.join(''), b.join('')];
+    // throw Error('only string input support!!!');
+  }
   
   while (a.length !== b.length) {
     const [alen, blen] = [a.length, b.length];
@@ -14,20 +17,24 @@ export function binaryAddition(a, b) {
     }
   }
 
+  // turn a and b into arrays
+  a = a.split('');
+  b = b.split('');
+
+
   for (let i = a.length - 1; i >= 0; i--) {
-    const fa = fullAdder(a[i], b[i], carry);
+    const fa = fullAdder(parseInt(a[i]), parseInt(b[i]), carry);
     result.unshift(fa[0]);
     carry = fa[1];
   }
-  return carry ? [carry, ...result] : result;
+  return carry ? [carry, ...result].join('') : result.join('');
 }
 
-console.log(binaryAddition([1, 0, 1, 0], [1, 1, 0, 1])); // 10111
-console.log(binaryAddition([0, 1, 0, 0], [1, 1, 0, 1])); // 10001
-console.log(binaryAddition([0, 0, 1], [1, 1, 0, 0, 1])) // 11010
+// console.log(binaryAddition('1', '11001')) // 11010
+// console.log(binaryAddition('1101', '10000')); // 11101
 
 export function binaryAddition2(a, b) { 
   return (a | b) + (a & b);
 }
 
-console.log(binaryAddition2(10, 13)); // 23
+// console.log(binaryAddition2(10, 13)); // 23
